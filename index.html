@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+  <meta charset="UTF-8">
+  <title>Music: Keyboard Practice</title>
+
+  <script src="https://cdn.jsdelivr.net/npm/webmidi@3.0.21/dist/iife/webmidi.iife.js"></script>
+
+  <script type="module">
+
+    // Enable WebMidi.js and trigger the onEnabled() function when ready.
+    WebMidi
+      .enable()
+      .then(onEnabled)
+      .catch(err => alert(err));
+
+    function onEnabled() {
+
+      if (WebMidi.inputs.length < 1) {
+        document.getElementById("keyboard").text = "No device detected.";
+      } else {
+        WebMidi.inputs.forEach((device, index) => {
+          document.getElementById("keyboard").innerText = `${device.name}`;
+        });
+      }
+
+      const mySynth = WebMidi.inputs[0];
+      // const mySynth = WebMidi.getInputByName("TYPE NAME HERE!")
+
+      mySynth.channels[1].addListener("noteon", e => {
+        // console.log(e);
+        document.getElementById("key").innerText = e.note.identifier;
+      });
+
+    }
+
+  </script>
+
+  <link rel="stylesheet" href="css/styles.css">
+
+</head>
+
+<body>
+  <div className="container">
+
+    <Head>
+      <title>Music: Keyboard Practice</title>
+      <link rel="icon" href="/favicon.ico" />
+    </Head>
+
+    <div id="keyboard">
+      No device detected.
+    </div>
+
+    <main>
+      <h1 id="key" className="title">
+        Press any key
+      </h1>
+    </main>
+
+    <!-- <footer>
+      <pre>test</pre>
+    </footer> -->
+</body>
+
+</html>
