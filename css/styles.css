@@ -143,10 +143,20 @@ code {
 /* Keyboard */
 
 #keyboard {
-    position: absolute;
-    top     : 10px;
-    right   : 10px;
+    position        : absolute;
+    top             : 10px;
+    right           : 10px;
     background-color: lightgrey;
-    padding: 10px;
-    border-radius: 10%;
+    padding         : 10px;
+    border-radius   : 10%;
 }
+
+/* vexflow */
+
+.vexbox {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 150px;
+  }

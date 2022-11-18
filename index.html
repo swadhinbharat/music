@@ -28,16 +28,14 @@
       }
 
       const mySynth = WebMidi.inputs[0];
-      // const mySynth = WebMidi.getInputByName("TYPE NAME HERE!")
 
       mySynth.channels[1].addListener("noteon", e => {
-        // console.log(e);
         document.getElementById("key").innerText = e.note.identifier;
       });
-
     }
-
   </script>
+
+
 
   <link rel="stylesheet" href="css/styles.css">
 
@@ -56,6 +54,10 @@
     </div>
 
     <main>
+      <div class="vexbox">
+        <div id="output">Placeholder</div>
+      </div>
+
       <h1 id="key" className="title">
         Press any key
       </h1>
@@ -64,6 +66,28 @@
     <!-- <footer>
       <pre>test</pre>
     </footer> -->
+
+  <!-- VexFlow -->
+  <script src="https://cdn.jsdelivr.net/npm/vexflow@4.0.3/build/cjs/vexflow.js"></script>
+  <script>
+    const { Factory } = Vex.Flow;
+
+    // Create a VexFlow renderer attached to the DIV element with id="output".
+    const vf = new Factory({ renderer: { elementId: 'output' } });
+    const score = vf.EasyScore();
+    const system = vf.System();
+
+    // Create a 4/4 treble stave and add two parallel voices.
+    system.addStave({
+      voices: [
+        // Top voice has 4 quarter notes with stems up.
+        score.voice(score.notes('C#5/q, B4, A4, G#4', { stem: 'up' }))
+      ]
+    }).addClef('treble').addTimeSignature('4/4');
+
+    // Draw it!
+    vf.draw();
+  </script>    
 </body>
 
 </html>
